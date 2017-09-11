@@ -6,7 +6,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
-  <meta name="author" content="August 2, 2016" />
+  <meta name="author" content="September 19, 2017" />
   <title>Savio introductory training: Basic usage of the Berkeley Savio high-performance computing cluster</title>
   <style type="text/css">code{white-space: pre;}</style>
   <link rel="stylesheet" type="text/css" media="screen, projection, print"
@@ -18,14 +18,15 @@
 <div class="slide titlepage">
   <h1 class="title">Savio introductory training: Basic usage of the Berkeley Savio high-performance computing cluster</h1>
   <p class="author">
-August 2, 2016
+September 19, 2017
   </p>
+  <p class="date">Chris Paciorek and Deb McCaffrey</p>
 </div>
 <div id="introduction" class="slide section level1">
 <h1>Introduction</h1>
-<p>We'll do this mostly as a demonstration. I encourage you to login to your account and try out the various examples yourself as we go through them.</p>
-<p>Much of this material is based on the extensive Savio documention we have prepared and continue to prepare, available at <a href="http://research-it.berkeley.edu/services/high-performance-computing/user-guide">http://research-it.berkeley.edu/services/high-performance-computing/user-guide</a>.</p>
-<p>The materials for this tutorial are available using git at <a href="https://github.com/ucberkeley/savio-training-intro-2016">https://github.com/ucberkeley/savio-training-intro-2016</a> or simply as a <a href="https://github.com/ucberkeley/savio-training-intro-2016/archive/master.zip">zip file</a>.</p>
+<p>We'll do this mostly as a demonstration. We encourage you to login to your account and try out the various examples yourself as we go through them.</p>
+<p>Much of this material is based on the extensive Savio documention we have prepared and continue to prepare, available at <a href="http://research-it.berkeley.edu/services/high-performance-computing/user-guide" class="uri">http://research-it.berkeley.edu/services/high-performance-computing/user-guide</a>.</p>
+<p>The materials for this tutorial are available using git at <a href="https://github.com/ucberkeley/savio-training-intro-2017">https://github.com/ucberkeley/savio-training-intro-2016</a> or simply as a <a href="https://github.com/ucberkeley/savio-training-intro-2017/archive/master.zip">zip file</a>.</p>
 </div>
 <div id="outline" class="slide section level1">
 <h1>Outline</h1>
@@ -33,7 +34,7 @@ August 2, 2016
 <ul>
 <li>System capabilities and hardware
 <ul>
-<li>Getting access to the system - FCA and condo</li>
+<li>Getting access to the system - FCA, condo, ICA</li>
 <li>Savio computing nodes</li>
 <li>Disk space options (home, scratch, condo storage)</li>
 </ul></li>
@@ -60,7 +61,10 @@ August 2, 2016
 <li>HTC jobs</li>
 <li>Monitoring jobs and cluster status</li>
 </ul></li>
-<li>Basic use of standard software: Python and R</li>
+<li>Basic use of standard software: Python and R
+<ul>
+<li>Jupyter notebooks</li>
+</ul></li>
 <li>More information
 <ul>
 <li>How to get additional help</li>
@@ -71,7 +75,7 @@ August 2, 2016
 <div id="system-capabilities-and-hardware" class="slide section level1">
 <h1>System capabilities and hardware</h1>
 <ul>
-<li>Savio is a 335-node, &gt;7000-core Linux cluster rated at 200 peak teraFLOPS.</li>
+<li>Savio is a &gt;330-node, &gt;7000-core Linux cluster rated at &gt;300 peak teraFLOPS.</li>
 <li>~162 compute nodes provided by the institution for general access</li>
 <li>~161 compute nodes contributed by researchers in the Condo program</li>
 <li>50 nodes in the process of being added</li>
@@ -80,8 +84,9 @@ August 2, 2016
 <div id="getting-access-to-the-system---fca-and-condo" class="slide section level1">
 <h1>Getting access to the system - FCA and condo</h1>
 <ul>
-<li>All regular Berkeley faculty can request 200,000 service units (roughly core-hours) per year through the <a href="http://research-it.berkeley.edu/services/high-performance-computing/faculty-computing-allowance">Faculty Computing Allowance (FCA)</a></li>
+<li>All regular Berkeley faculty can request 300,000 service units (roughly core-hours) per year through the <a href="http://research-it.berkeley.edu/services/high-performance-computing/faculty-computing-allowance">Faculty Computing Allowance (FCA)</a></li>
 <li>Researchers can also purchase nodes for their own priority access and gain access to the shared Savio infrastructure and to the ability to <em>burst</em> to additional nodes through the <a href="http://research-it.berkeley.edu/services/high-performance-computing/condo-cluster-program">condo cluster program</a></li>
+<li>Instructors can request an <a href="http://research-it.berkeley.edu/services/high-performance-computing/instructional-computing-allowance">Instructional Computing Allowance (ICA)</a>.</li>
 </ul>
 <p>Faculty/principal investigators can allow researchers working with them to get user accounts with access to the FCA or condo resources available to the faculty member.</p>
 </div>
@@ -94,7 +99,7 @@ August 2, 2016
 <h1>Disk space options (home, scratch, project, condo storage)</h1>
 <p>You have access to the following disk space, described <a href="http://research-it.berkeley.edu/services/high-performance-computing/user-guide">here in the <em>Storage and Backup</em> section</a>.</p>
 <p>When reading/writing data to/from disk, unless the amount of data is small, please put the data in your scratch space at <code>/global/scratch/SAVIO_USERNAME</code>. The system is set up so that disk access for all users is optimized when users are doing input/output (I/O) off of scratch rather than off of their home directories. Doing I/O with files on your home directory can impact the ability of others to access their files on the filesystem.</p>
-<p>We are also making available disk space for purchase via a new <em>condo storage</em> offering. The minimum purchase will likely be around $14,000, which will provide roughly 40 TB for five years, but the exact details are still being worked out.</p>
+<p>Large amounts of disk space is available for purchase via a new <a href="http://research-it.berkeley.edu/services/high-performance-computing/brc-condo-storage-service-savio"><em>condo storage</em> offering</a>. The minimum purchase is about $7,000, which provides roughly 25 TB for five years.</p>
 </div>
 <div id="login-nodes-compute-nodes-and-dtn-nodes" class="slide section level1">
 <h1>Login nodes, compute nodes, and DTN nodes</h1>
@@ -107,7 +112,6 @@ August 2, 2016
 <center>
 <img src="savioOverview.jpeg">
 </center>
-
 </div>
 <div id="logging-in" class="slide section level1">
 <h1>Logging in</h1>
@@ -130,7 +134,7 @@ August 2, 2016
 <div id="data-transfer-scpsftp" class="slide section level1">
 <h1>Data transfer: SCP/SFTP</h1>
 <p>We can use the <em>scp</em> and <em>sftp</em> protocols to transfer files.</p>
-<p>You need to use the Savio data transfer node, <code>dtn.brc.berkeley.edu</code>.</p>
+<p>You need to use the Savio data transfer node, <code>dtn.brc.berkeley.edu</code>. The file <code>bayArea.csv</code> is too large to store on Github; you can obtain it <a href="https://www.stat.berkeley.edu/share/paciorek/bayArea.csv">here</a>.</p>
 <p>Linux/Mac:</p>
 <pre><code># to Savio, while on your local machine
 scp bayArea.csv paciorek@dtn.brc.berkeley.edu:~/.
@@ -160,7 +164,7 @@ tar -xvzf files.tgz</code></pre>
 <div id="data-transfer-box" class="slide section level1">
 <h1>Data transfer: Box</h1>
 <p>Box provides <strong>unlimited</strong>, free, secured, and encrypted content storage of files with a maximum file size of 15 Gb to Berkeley affiliates. So it's a good option for backup and long-term storage.</p>
-<p>You can move files between Box and your laptop using the Box Sync app. And you can interact with Box via a web browser at <a href="http://box.berkeley.edu">http://box.berkeley.edu</a>.</p>
+<p>You can move files between Box and your laptop using the Box Sync app. And you can interact with Box via a web browser at <a href="http://box.berkeley.edu" class="uri">http://box.berkeley.edu</a>.</p>
 <p>The best way to move files between Box and Savio is <a href="http://research-it.berkeley.edu/services/high-performance-computing/transferring-data-between-savio-and-your-uc-berkeley-box-account">via lftp as discussed here</a>.</p>
 <p>Here's how you logon to box via <em>lftp</em> on Savio (assuming you've set up an external password already as described in the link above):</p>
 <pre><code>ssh SAVIO_USERNAME@dtn.brc.berkeley.edu
@@ -364,6 +368,18 @@ sinfo -p savio2_gpu</code></pre>
 <pre><code>squeue -o &quot;%.7i %.9P %.20j %.8u %.2t %.9M %.5C %.8r %.6D %R %p %q %b&quot; </code></pre>
 <p>We provide some <a href="http://research-it.berkeley.edu/services/high-performance-computing/tips-using-brc-savio-cluster">tips about monitoring your job</a>.</p>
 </div>
+<div id="example-use-of-standard-software-ipython-and-r-notebooks-through-jupyterhub" class="slide section level1">
+<h1>Example use of standard software: IPython and R notebooks through JupyterHub</h1>
+<p>Savio allows one to <a href="http://research-it.berkeley.edu/services/high-performance-computing/using-jupyter-notebooks-and-jupyterhub-savio">run Jupyter-based notebooks via a browser-based service called Jupyterhub</a>.</p>
+<p>Let's see a brief demo of an IPython notebook:</p>
+<ul>
+<li>Connect to https://jupyter.brc.berkeley.edu</li>
+<li>Login as usual with a one-time password</li>
+<li>Select how to run your notebook (on a test node or in the <code>savio</code> or <code>savio2</code> partitions)</li>
+<li>Start up a notebook</li>
+</ul>
+<p>You can also run <a href="http://research-it.berkeley.edu/services/high-performance-computing/using-jupyter-notebooks-and-jupyterhub-savio/parallelization">parallel computations via an IPython notebook</a>.</p>
+</div>
 <div id="example-use-of-standard-software-python" class="slide section level1">
 <h1>Example use of standard software: Python</h1>
 <p>Let's see a basic example of doing an analysis in Python across multiple cores on multiple nodes. We'll use the airline departure data in <em>bayArea.csv</em>.</p>
@@ -506,6 +522,7 @@ results</code></pre>
 <li>For questions about computing resources in general, including cloud computing:
 <ul>
 <li>brc@berkeley.edu</li>
+<li>office hours: Wed. 1:30-3:30, Thur. 9:30-11:30 here in AIS</li>
 </ul></li>
 <li>For questions about data management (including HIPAA-protected data):
 <ul>
@@ -516,8 +533,8 @@ results</code></pre>
 <div id="upcoming-events" class="slide section level1">
 <h1>Upcoming events</h1>
 <ul>
-<li>August 9: <a href="http://www.psc.edu/index.php/training-category-list/2350-xsede-hpc-workshop-august-9-2016-big-data">XSEDE Big Data training for Hadoop and Spark</a>, here in this AIS room.</li>
-<li>September 13: Advanced Savio training: topics may include compiling software, using Spark and Hadoop, using GPUs, advanced parallelization techniques.</li>
+<li><a href="http://research-it.berkeley.edu/services/cloud-computing-support/cloud-working-group">Cloud Working Group</a>, every other Thursday (including Sep. 28), 4-5 in D-Lab</li>
+<li>Machine Learning Working Group, every other Friday (including Sep. 22), 12:30-2 in D-Lab</li>
 </ul>
 </div>
 </body>
