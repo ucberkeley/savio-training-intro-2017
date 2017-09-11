@@ -651,4 +651,4 @@ results
 # Upcoming events
 
  - [Cloud Working Group](http://research-it.berkeley.edu/services/cloud-computing-support/cloud-working-group), every other Thursday (including Sep. 28), 4-5 in D-Lab
- - Machine Learning Working Group, every other Friday (including Sep. 22), 12:30-2 in D-Lab
+ - [Machine Learning Working Group](http://dlab.berkeley.edu/working-groups/machine-learning-working-group-0), every other Friday (including Sep. 22), 12:30-2 in D-Lab
