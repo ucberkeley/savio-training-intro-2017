@@ -9,7 +9,7 @@ We'll do this mostly as a demonstration. We encourage you to login to your accou
 
 Much of this material is based on the extensive Savio documention we have prepared and continue to prepare, available at [http://research-it.berkeley.edu/services/high-performance-computing](http://research-it.berkeley.edu/services/high-performance-computing/user).
 
-The materials for this tutorial are available using git at [https://github.com/ucberkeley/savio-training-intro-2016](https://github.com/ucberkeley/savio-training-intro-2017) or simply as a [zip file](https://github.com/ucberkeley/savio-training-intro-2017/archive/master.zip).
+The materials for this tutorial are available using git at [https://github.com/ucberkeley/savio-training-intro-2017](https://github.com/ucberkeley/savio-training-intro-2017) or simply as a [zip file](https://github.com/ucberkeley/savio-training-intro-2017/archive/master.zip).
 
 # Outline
 
@@ -62,7 +62,7 @@ Faculty/principal investigators can allow researchers working with them to get u
 
 Let's take a look at the hardware specifications of the computing nodes on the cluster [(see the *Hardware Configuration* section of this document)](http://research-it.berkeley.edu/services/high-performance-computing/user-guide/savio-user-guide).
 
-The nodes are divided into several pools, called partitions. These partitions have different restrictions and costs associated with them [(see the *Configuration Details* section of this document)](http://research-it.berkeley.edu/services/high-performance-computing/user-guide/savio-user-guide). Any job you submit must be submitted to a partition to which you have access.
+The nodes are divided into several pools, called partitions. These partitions have different restrictions and costs associated with them [(see the *Scheduler Configuration* section of this document)](http://research-it.berkeley.edu/services/high-performance-computing/user-guide/savio-user-guide). Any job you submit must be submitted to a partition to which you have access.
 
 # Disk space options (home, scratch, project, condo storage)
 
@@ -132,12 +132,14 @@ scp bayArea.csv paciorek@dtn.brc.berkeley.edu:/global/scratch/paciorek/.
 scp paciorek@dtn.brc.berkeley.edu:~/data/newName.csv ~/Desktop/.
 ```
 
-If you can ssh to your local machine or want to transfer files to other systems on to which you can ssh, you can syntax like this, while logged onto Savio:
+If you can ssh to your local machine or want to transfer files to other systems on to which you can ssh, you can login to the dtn node to execute the scp commands:
 
 ```
-ssh dtn
-scp ~/file.csv OTHER_USERNAME@other.domain.edu:~/data/.
+ssh SAVIO_USERNAME@dtn.brc.berkeley.edu
+[SAVIO_USERNAME@dtn ~]$ scp ~/file.csv OTHER_USERNAME@other.domain.edu:~/data/.
 ```
+
+If you're already connected to a Savio login node, you can use `ssh dtn` to login to the dtn.
 
 One program you can use with Windows is *WinSCP*, and a multi-platform program for doing transfers via SFTP is *FileZilla*. After logging in, you'll see windows for the Savio filesystem and your local filesystem on your machine. You can drag files back and forth.
 
@@ -158,7 +160,7 @@ Savio's endpoint is named `ucb#brc`.
 
 If you are transferring to/from your laptop, you'll need 1) Globus Connect Personal set up, 2) your machine established as an endpoint and 3) Globus Connect Pesonal actively running on your machine. At that point you can proceed as below.
 
-To transfer files, you open Globus at [globus.org](https://globus.org) and authenticate to the endpoints you want to transfer between. You can then start a transfer and it will proceed in the background, including restarting if interrupted. 
+To transfer files, you open Globus at [globus.org](https://globus.org) and authenticate to the endpoints you want to transfer between. This means that you only need to authenticate once, whereas you might need to authenticate multiple times with scp and sftp. You can then start a transfer and it will proceed in the background, including restarting if interrupted. 
 
 Globus also provides a [command line interface](https://docs.globus.org/cli/using-the-cli) that will allow you to do transfers programmatically, such that a transfer could be embedded in a workflow script.
 
@@ -204,6 +206,8 @@ mirror mydir .
 Be careful, because it's fairly easy to wipe out files or directories on Box.
 
 Finally you can set up *special purpose accounts* (Berkeley SPA) so files are owned at a project level rather than by individuals.
+
+For more ambitious users, Box has a Python-based SDK that can be used to write scripts for file transfers. For more information on how to do this, check out the `BoxAuthenticationBootstrap.ipynb` and `TransferFilesFromBoxToSavioScratch.ipynb` from BRC's cyberinfrastructure engineer on [GitHub](https://github.com/ucberkeley/brc-cyberinfrastructure/tree/dev/analysis-workflows/notebooks)
 
 BRC is working (long-term) on making Globus available for transfer to/from Box, but it's not available yet.
 
