@@ -124,7 +124,6 @@ September 19, 2017
 <p>If you want to be able to open programs with graphical user interfaces:</p>
 <pre><code>ssh -Y SAVIO_USERNAME@hpc.brc.berkeley.edu</code></pre>
 <p>To display the graphical windows on your local machine, you'll need X server software on your own machine to manage the graphical windows. For Windows, your options include <em>eXceed</em> or <em>Xming</em> and for Mac, there is <em>XQuartz</em>.</p>
-<p>Sidenote: we are investigating other mechanisms to interact with Savio via a graphical user interface (GUI).</p>
 </div>
 <div id="data-transfer-with-examples-tofrom-laptop-box-google-drive-aws" class="slide section level1">
 <h1>Data transfer with examples to/from laptop, Box, Google Drive, AWS</h1>
@@ -206,12 +205,13 @@ module avail  # what&#39;s available</code></pre>
 python
 
 module avail
-module load python/2.7.8
+module load python/3.2.3
 which python
 module avail
 module load numpy
 python 
 # import numpy as np</code></pre>
+<p>Note that once Savio switches to the SL7 operating system circa December, all Python and R packages will be directly available as soon as either the Python or R module is loaded.</p>
 <p>Similarly, we can see that linear algebra, FFT, and HDF5/NetCDF software is available only after loading either the intel or gcc modules.</p>
 <pre><code>module load intel
 module avail
@@ -317,7 +317,7 @@ wwall -j JOB_ID</code></pre>
 <p>You can also do work interactively.</p>
 <p>For this, you may want to have used the -Y flag to ssh if you are running software with a GUI such as MATLAB.</p>
 <pre><code># ssh -Y SAVIO_USERNAME@hpc.brc.berkeley.edu
-srun -A co_stat -p savio2  -N 1 -t 10:0 --pty bash
+srun -A co_stat -p savio2  --nodes=1 -t 10:0 --pty bash
 # now execute on the compute node:
 module load matlab
 matlab</code></pre>
@@ -327,13 +327,13 @@ matlab</code></pre>
 <p>Condo users have access to the broader compute resource that is limited only by the size of partitions, under the <em>savio_lowprio</em> QoS (queue). However this QoS does not get a priority as high as the general QoSs, such as <em>savio_normal</em> and <em>savio_debug</em>, or all the condo QoSs, and it is subject to preemption when all the other QoSs become busy.</p>
 <p>More details can be found <a href="http://research-it.berkeley.edu/services/high-performance-computing/user-guide/savio-user-guide">in the <em>Low Priority Jobs</em> section of the user guide</a>.</p>
 <p>Suppose I wanted to burst beyond the Statistics condo to run on 20 nodes. I'll illustrate here with an interactive job though usually this would be for a batch job.</p>
-<pre><code>srun -A co_stat -p savio2 --qos=savio_lowprio  -N 20 -t 10:0 --pty bash
+<pre><code>srun -A co_stat -p savio2 --qos=savio_lowprio --nodes=20 -t 10:0 --pty bash
 env | grep SLURM</code></pre>
 </div>
 <div id="htc-jobs" class="slide section level1">
 <h1>HTC jobs</h1>
 <p>There is a partition called the HTC partition that allows you to request cores individually rather than an entire node at a time. The nodes in this partition are faster than the other nodes.</p>
-<pre><code>srun -A co_stat -p savio2_htc  -n 2 -t 10:0 --pty bash
+<pre><code>srun -A co_stat -p savio2_htc --nodes=2 -t 10:0 --pty bash
 env | grep SLURM
 module load python/3.2.3 numpy
 python3 calc.py &gt;&amp; calc.out &amp;
@@ -348,8 +348,8 @@ top</code></pre>
 <li><a href="http://research-it.berkeley.edu/services/high-performance-computing/tips-using-brc-savio-cluster">see the Savio tip on &quot;How to run High-Throughput Computing ...&quot;</a></li>
 <li>using <a href="https://github.com/berkeley-scf/tutorial-parallel-basics">single-node parallelism</a> and <a href="https://github.com/berkeley-scf/tutorial-parallel-distributed">multiple-node parallelism</a> in Python, R, and MATLAB
 <ul>
-<li>parallel R tools such as <em>foreach</em>, &quot;parLapply<em>, and </em>mclapply*</li>
-<li>parallel Python tools such as <em>ipython</em>, <em>pp</em>, and <em>multiprocessing</em></li>
+<li>parallel R tools such as <em>foreach</em>, <em>parLapply</em>, and <em>mclapply</em></li>
+<li>parallel Python tools such as <em>ipython parallel</em>, <em>pp</em>, and <em>multiprocessing</em></li>
 <li>parallel functionality in MATLAB through <em>parfor</em></li>
 </ul></li>
 </ul>
@@ -366,7 +366,7 @@ sinfo -p savio2_gpu</code></pre>
 <p>You can cancel a job with <code>scancel</code>.</p>
 <pre><code>scancel YOUR_JOB_ID</code></pre>
 <p>For more information on cores, QoS, and additional (e.g., GPU) resources, here's some syntax:</p>
-<pre><code>squeue -o &quot;%.7i %.9P %.20j %.8u %.2t %.9M %.5C %.8r %.6D %R %p %q %b&quot; </code></pre>
+<pre><code>squeue -o &quot;%.7i %.12P %.20j %.8u %.2t %.9M %.5C %.8r %.3D %.20R %.8p %.20q %b&quot; </code></pre>
 <p>We provide some <a href="http://research-it.berkeley.edu/services/high-performance-computing/tips-using-brc-savio-cluster">tips about monitoring your job</a>.</p>
 </div>
 <div id="example-use-of-standard-software-ipython-and-r-notebooks-through-jupyterhub" class="slide section level1">
@@ -389,18 +389,20 @@ sinfo -p savio2_gpu</code></pre>
 <pre><code># remember to do I/O off scratch
 cp bayArea.csv /global/scratch/paciorek/.
 # install Python package
+module unload python
+module load python/2.7.8
 module load pip
 # trial and error to realize which package dependencies available in modules...
-module load python/2.7.8 numpy scipy six pandas pytz
+module load numpy scipy six pandas pytz
 pip install --user statsmodels</code></pre>
 <p>Now we'll start up an interactive session, though often this sort of thing would be done via a batch job.</p>
-<pre><code>srun -A co_stat -p savio2  -N 2 --ntasks-per-node=24 -t 30:0 --pty bash</code></pre>
+<pre><code>srun -A co_stat -p savio2 --nodes=2 --ntasks-per-node=24 -t 30:0 --pty bash</code></pre>
 <p>Now we'll start up a cluster using IPython's parallel tools. To do this across multiple nodes within a SLURM job, it goes like this:</p>
 <pre><code>module load python/2.7.8 ipython gcc openmpi
 ipcontroller --ip=&#39;*&#39; &amp;
-sleep 5
+sleep 10
 srun ipengine &amp;
-sleep 15  # wait until all engines have successfully started
+sleep 20  # wait until all engines have successfully started
 ipython</code></pre>
 <p>If we were doing this on a single node, we could start everything up in a single call to <em>ipcluster</em>:</p>
 <pre><code>module load python/2.7.8 ipython
@@ -456,9 +458,10 @@ parallel_result</code></pre>
 <pre><code># remember to do I/O off scratch
 cp bayArea.csv /global/scratch/paciorek/.
 module load r Rmpi
-Rscript -e &quot;install.packages(&#39;doMPI&#39;, repos = &#39;http://cran.cnr.berkeley.edu&#39;, lib = &#39;/global/home/users/paciorek/R/x86_64-pc-linux-gnu-library/3.2&#39;)&quot;
+Rscript -e &quot;install.packages(&#39;doMPI&#39;, repos = &#39;http://cran.cnr.berkeley.edu&#39;,
+  lib = &#39;/global/home/users/paciorek/R/x86_64-pc-linux-gnu-library/3.2&#39;)&quot;
 
-srun -A co_stat -p savio2  -N 3 --ntasks-per-node=24 -t 30:0 --pty bash
+srun -A co_stat -p savio2  --nodes=3 --ntasks-per-node=24 -t 30:0 --pty bash
 module load gcc openmpi r Rmpi
 mpirun R CMD BATCH --no-save parallel-multi.R parallel-multi.Rout &amp;</code></pre>
 <p>Now here's the R code (see <em>parallel-multi.R</em>) we're running:</p>
@@ -490,7 +493,7 @@ results
 closeCluster(cl)
 mpi.quit()</code></pre>
 <p>If you just want to parallelize within a node:</p>
-<pre><code>srun -A co_stat -p savio2  -N 1 -t 30:0 --pty bash
+<pre><code>srun -A co_stat -p savio2 --nodes=1 -t 30:0 --pty bash
 module load r
 R CMD BATCH --no-save parallel-one.R parallel-one.Rout &amp;</code></pre>
 <p>Now here's the R code (see <em>parallel-one.R</em>) we're running:</p>

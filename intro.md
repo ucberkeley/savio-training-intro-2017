@@ -233,7 +233,7 @@ which python
 python
 
 module avail
-module load python/2.7.8
+module load python/3.2.3
 which python
 module avail
 module load numpy
@@ -381,7 +381,7 @@ For this, you may want to have used the -Y flag to ssh if you are running softwa
 
 ```
 # ssh -Y SAVIO_USERNAME@hpc.brc.berkeley.edu
-srun -A co_stat -p savio2  -N 1 -t 10:0 --pty bash
+srun -A co_stat -p savio2  --nodes=1 -t 10:0 --pty bash
 # now execute on the compute node:
 module load matlab
 matlab
@@ -396,7 +396,7 @@ More details can be found [in the *Low Priority Jobs* section of the user guide]
 Suppose I wanted to burst beyond the Statistics condo to run on 20 nodes. I'll illustrate here with an interactive job though usually this would be for a batch job.
 
 ```
-srun -A co_stat -p savio2 --qos=savio_lowprio  -N 20 -t 10:0 --pty bash
+srun -A co_stat -p savio2 --qos=savio_lowprio --nodes=20 -t 10:0 --pty bash
 env | grep SLURM
 ```
 
@@ -405,7 +405,7 @@ env | grep SLURM
 There is a partition called the HTC partition that allows you to request cores individually rather than an entire node at a time. The nodes in this partition are faster than the other nodes.
 
 ```
-srun -A co_stat -p savio2_htc  -n 2 -t 10:0 --pty bash
+srun -A co_stat -p savio2_htc --nodes=2 -t 10:0 --pty bash
 env | grep SLURM
 module load python/3.2.3 numpy
 python3 calc.py >& calc.out &
@@ -422,8 +422,8 @@ FIXME: update the HTC link to go to the new ht_helper page
 
   - [see the Savio tip on "How to run High-Throughput Computing ..."](http://research-it.berkeley.edu/services/high-performance-computing/tips-using-brc-savio-cluster)
   - using [single-node parallelism](https://github.com/berkeley-scf/tutorial-parallel-basics) and [multiple-node parallelism](https://github.com/berkeley-scf/tutorial-parallel-distributed) in Python, R, and MATLAB
-    - parallel R tools such as *foreach*, "parLapply*, and *mclapply*
-    - parallel Python tools such as  *ipython*, *pp*, and *multiprocessing*
+    - parallel R tools such as *foreach*, *parLapply*, and *mclapply*
+    - parallel Python tools such as  *ipython parallel*, *pp*, and *multiprocessing*
     - parallel functionality in MATLAB through *parfor*
 
 # Monitoring jobs and the job queue
@@ -448,7 +448,7 @@ scancel YOUR_JOB_ID
 
 For more information on cores, QoS, and additional (e.g., GPU) resources, here's some syntax:
 ```
-squeue -o "%.7i %.9P %.20j %.8u %.2t %.9M %.5C %.8r %.6D %R %p %q %b" 
+squeue -o "%.7i %.12P %.20j %.8u %.2t %.9M %.5C %.8r %.3D %.20R %.8p %.20q %b" 
 ```
 
 We provide some [tips about monitoring your job](http://research-it.berkeley.edu/services/high-performance-computing/tips-using-brc-savio-cluster).
@@ -478,16 +478,18 @@ First we'll install a Python package not already available as a module.
 # remember to do I/O off scratch
 cp bayArea.csv /global/scratch/paciorek/.
 # install Python package
+module unload python
+module load python/2.7.8
 module load pip
 # trial and error to realize which package dependencies available in modules...
-module load python/2.7.8 numpy scipy six pandas pytz
+module load numpy scipy six pandas pytz
 pip install --user statsmodels
 ```
 
 Now we'll start up an interactive session, though often this sort of thing would be done via a batch job.
 
 ```
-srun -A co_stat -p savio2  -N 2 --ntasks-per-node=24 -t 30:0 --pty bash
+srun -A co_stat -p savio2 --nodes=2 --ntasks-per-node=24 -t 30:0 --pty bash
 ```
 
 Now we'll start up a cluster using IPython's parallel tools. To do this across multiple nodes within a SLURM job, it goes like this:
@@ -495,9 +497,9 @@ Now we'll start up a cluster using IPython's parallel tools. To do this across m
 ```
 module load python/2.7.8 ipython gcc openmpi
 ipcontroller --ip='*' &
-sleep 5
+sleep 10
 srun ipengine &
-sleep 15  # wait until all engines have successfully started
+sleep 20  # wait until all engines have successfully started
 ipython
 ```
 
@@ -569,9 +571,10 @@ We'll do this interactively though often this sort of thing would be done via a 
 # remember to do I/O off scratch
 cp bayArea.csv /global/scratch/paciorek/.
 module load r Rmpi
-Rscript -e "install.packages('doMPI', repos = 'http://cran.cnr.berkeley.edu', lib = '/global/home/users/paciorek/R/x86_64-pc-linux-gnu-library/3.2')"
+Rscript -e "install.packages('doMPI', repos = 'http://cran.cnr.berkeley.edu',
+  lib = '/global/home/users/paciorek/R/x86_64-pc-linux-gnu-library/3.2')"
 
-srun -A co_stat -p savio2  -N 3 --ntasks-per-node=24 -t 30:0 --pty bash
+srun -A co_stat -p savio2  --nodes=3 --ntasks-per-node=24 -t 30:0 --pty bash
 module load gcc openmpi r Rmpi
 mpirun R CMD BATCH --no-save parallel-multi.R parallel-multi.Rout &
 ```
@@ -610,7 +613,7 @@ mpi.quit()
 If you just want to parallelize within a node:
 
 ```
-srun -A co_stat -p savio2  -N 1 -t 30:0 --pty bash
+srun -A co_stat -p savio2 --nodes=1 -t 30:0 --pty bash
 module load r
 R CMD BATCH --no-save parallel-one.R parallel-one.Rout &
 ```
