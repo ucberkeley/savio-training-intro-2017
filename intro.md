@@ -46,8 +46,8 @@ This training session will cover the following topics:
 # System capabilities and hardware
 
 - Savio is a >380-node, >8000-core Linux cluster rated at >300 peak teraFLOPS. 
-   - about half of compute nodes provided by the institution for general access
-   - about half of compute nodes contributed by researchers in the Condo program
+   - about 174 compute nodes provided by the institution for general access
+   - about 211 compute nodes contributed by researchers in the Condo program
 
 
 # Getting access to the system - FCA and condo
