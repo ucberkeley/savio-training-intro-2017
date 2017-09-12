@@ -7,7 +7,7 @@
 
 We'll do this mostly as a demonstration. We encourage you to login to your account and try out the various examples yourself as we go through them.
 
-Much of this material is based on the extensive Savio documention we have prepared and continue to prepare, available at [http://research-it.berkeley.edu/services/high-performance-computing](http://research-it.berkeley.edu/services/high-performance-computing/user).
+Much of this material is based on the extensive Savio documention we have prepared and continue to prepare, available at [http://research-it.berkeley.edu/services/high-performance-computing](http://research-it.berkeley.edu/services/high-performance-computing).
 
 The materials for this tutorial are available using git at [https://github.com/ucberkeley/savio-training-intro-2017](https://github.com/ucberkeley/savio-training-intro-2017) or simply as a [zip file](https://github.com/ucberkeley/savio-training-intro-2017/archive/master.zip).
 
@@ -107,8 +107,6 @@ ssh -Y SAVIO_USERNAME@hpc.brc.berkeley.edu
 ```
 
 To display the graphical windows on your local machine, you'll need X server software on your own machine to manage the graphical windows. For Windows, your options include *eXceed* or *Xming* and for Mac, there is *XQuartz*.
-
-Sidenote: we are investigating other mechanisms to interact with Savio via a graphical user interface (GUI). 
 
 # Data transfer with examples to/from laptop, Box, Google Drive, AWS
 
@@ -242,6 +240,8 @@ module load numpy
 python 
 # import numpy as np
 ```
+
+Note that once Savio switches to the SL7 operating system circa December, all Python and R packages will be directly available as soon as either the Python or R module is loaded.
 
 Similarly, we can see that linear algebra, FFT, and HDF5/NetCDF software is available only after loading either the intel or gcc modules.
 
