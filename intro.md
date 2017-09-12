@@ -404,8 +404,6 @@ env | grep SLURM
 
 There is a partition called the HTC partition that allows you to request cores individually rather than an entire node at a time. The nodes in this partition are faster than the other nodes.
 
-You must request access to the HTC partition at this time before you can submit jobs to it.
-
 ```
 srun -A co_stat -p savio2_htc  -n 2 -t 10:0 --pty bash
 env | grep SLURM
