@@ -16,7 +16,7 @@
 </div>
 <h1 id="introduction">Introduction</h1>
 <p>We'll do this mostly as a demonstration. We encourage you to login to your account and try out the various examples yourself as we go through them.</p>
-<p>Much of this material is based on the extensive Savio documention we have prepared and continue to prepare, available at <a href="http://research-it.berkeley.edu/services/high-performance-computing/user-guide" class="uri">http://research-it.berkeley.edu/services/high-performance-computing/user-guide</a>.</p>
+<p>Much of this material is based on the extensive Savio documention we have prepared and continue to prepare, available at <a href="http://research-it.berkeley.edu/services/high-performance-computing/user">http://research-it.berkeley.edu/services/high-performance-computing</a>.</p>
 <p>The materials for this tutorial are available using git at <a href="https://github.com/ucberkeley/savio-training-intro-2017">https://github.com/ucberkeley/savio-training-intro-2016</a> or simply as a <a href="https://github.com/ucberkeley/savio-training-intro-2017/archive/master.zip">zip file</a>.</p>
 <h1 id="outline">Outline</h1>
 <p>This training session will cover the following topics:</p>
@@ -62,25 +62,24 @@
 </ul>
 <h1 id="system-capabilities-and-hardware">System capabilities and hardware</h1>
 <ul>
-<li>Savio is a &gt;330-node, &gt;7000-core Linux cluster rated at &gt;300 peak teraFLOPS.</li>
-<li>~162 compute nodes provided by the institution for general access</li>
-<li>~161 compute nodes contributed by researchers in the Condo program</li>
-<li>50 nodes in the process of being added</li>
+<li>Savio is a &gt;380-node, &gt;8000-core Linux cluster rated at &gt;300 peak teraFLOPS.</li>
+<li>about half of compute nodes provided by the institution for general access</li>
+<li>about half of compute nodes contributed by researchers in the Condo program</li>
 </ul>
 <h1 id="getting-access-to-the-system---fca-and-condo">Getting access to the system - FCA and condo</h1>
 <ul>
 <li>All regular Berkeley faculty can request 300,000 service units (roughly core-hours) per year through the <a href="http://research-it.berkeley.edu/services/high-performance-computing/faculty-computing-allowance">Faculty Computing Allowance (FCA)</a></li>
 <li>Researchers can also purchase nodes for their own priority access and gain access to the shared Savio infrastructure and to the ability to <em>burst</em> to additional nodes through the <a href="http://research-it.berkeley.edu/services/high-performance-computing/condo-cluster-program">condo cluster program</a></li>
-<li>Instructors can request an <a href="http://research-it.berkeley.edu/services/high-performance-computing/instructional-computing-allowance">Instructional Computing Allowance (ICA)</a>.</li>
+<li>Instructors can request an <a href="http://research-it.berkeley.edu/programs/berkeley-research-computing/instructional-computing-allowance">Instructional Computing Allowance (ICA)</a>.</li>
 </ul>
 <p>Faculty/principal investigators can allow researchers working with them to get user accounts with access to the FCA or condo resources available to the faculty member.</p>
 <h1 id="savio-computing-nodes">Savio computing nodes</h1>
-<p>Let's take a look at the hardware specifications of the computing nodes on the cluster <a href="http://research-it.berkeley.edu/services/high-performance-computing/user-guide">(see the <em>Hardware Configuration</em> section of this document)</a>.</p>
-<p>The nodes are divided into several pools, called partitions. These partitions have different restrictions and costs associated with them <a href="http://research-it.berkeley.edu/services/high-performance-computing/user-guide">(see the <em>Configuration Details</em> section of this document)</a>. Any job you submit must be submitted to a partition to which you have access.</p>
+<p>Let's take a look at the hardware specifications of the computing nodes on the cluster <a href="http://research-it.berkeley.edu/services/high-performance-computing/user-guide/savio-user-guide">(see the <em>Hardware Configuration</em> section of this document)</a>.</p>
+<p>The nodes are divided into several pools, called partitions. These partitions have different restrictions and costs associated with them <a href="http://research-it.berkeley.edu/services/high-performance-computing/user-guide/savio-user-guide">(see the <em>Configuration Details</em> section of this document)</a>. Any job you submit must be submitted to a partition to which you have access.</p>
 <h1 id="disk-space-options-home-scratch-project-condo-storage">Disk space options (home, scratch, project, condo storage)</h1>
-<p>You have access to the following disk space, described <a href="http://research-it.berkeley.edu/services/high-performance-computing/user-guide">here in the <em>Storage and Backup</em> section</a>.</p>
+<p>You have access to the following disk space, described <a href="http://research-it.berkeley.edu/services/high-performance-computing/user-guide/savio-user-guide">here in the <em>Storage and Backup</em> section</a>.</p>
 <p>When reading/writing data to/from disk, unless the amount of data is small, please put the data in your scratch space at <code>/global/scratch/SAVIO_USERNAME</code>. The system is set up so that disk access for all users is optimized when users are doing input/output (I/O) off of scratch rather than off of their home directories. Doing I/O with files on your home directory can impact the ability of others to access their files on the filesystem.</p>
-<p>Large amounts of disk space is available for purchase via a new <a href="http://research-it.berkeley.edu/services/high-performance-computing/brc-condo-storage-service-savio"><em>condo storage</em> offering</a>. The minimum purchase is about $7,000, which provides roughly 25 TB for five years.</p>
+<p>Large amounts of disk space is available for purchase the <a href="http://research-it.berkeley.edu/services/high-performance-computing/brc-condo-storage-service-savio"><em>condo storage</em> offering</a>. The minimum purchase is about $7,000, which provides roughly 25 TB for five years.</p>
 <h1 id="login-nodes-compute-nodes-and-dtn-nodes">Login nodes, compute nodes, and DTN nodes</h1>
 <p>Savio has a few different kinds of nodes:</p>
 <ul>
@@ -160,7 +159,7 @@ mirror mydir .</code></pre>
 <h1 id="data-transfer-bdrive-google-drive">Data transfer: bDrive (Google Drive)</h1>
 <p>bDrive provides <strong>unlimited</strong>, free, secured, and encrypted content storage of files with a maximum file size of 5 Tb to Berkeley affiliates.</p>
 <p>You can move files to and from your laptop using the Google Drive app.</p>
-<p>There are also some third-party tools for copying files to/from Google Drive, though I've found them to be a bit klunky. This is why we recommend using Box for workflows at this point. However, BRC is also working (short-term) on making Globus available for transfer to/from bDrive, though it's not available yet.</p>
+<p>There are also some third-party tools for copying files to/from Google Drive, though I've found them to be a bit klunky. This is why we recommend using Box for workflows at this point. However, BRC is also working on making Globus available for transfer to/from bDrive, though it's not available yet.</p>
 <h1 id="software-modules">Software modules</h1>
 <p>A lot of software is available on Savio but needs to be loaded from the relevant software module before you can use it.</p>
 <pre><code>module list  # what&#39;s loaded?
@@ -279,7 +278,7 @@ module load matlab
 matlab</code></pre>
 <h1 id="low-priority-queue">Low-priority queue</h1>
 <p>Condo users have access to the broader compute resource that is limited only by the size of partitions, under the <em>savio_lowprio</em> QoS (queue). However this QoS does not get a priority as high as the general QoSs, such as <em>savio_normal</em> and <em>savio_debug</em>, or all the condo QoSs, and it is subject to preemption when all the other QoSs become busy.</p>
-<p>More details can be found <a href="http://research-it.berkeley.edu/services/high-performance-computing/user-guide">in the <em>Low Priority Jobs</em> section of the user guide</a>.</p>
+<p>More details can be found <a href="http://research-it.berkeley.edu/services/high-performance-computing/user-guide/savio-user-guide">in the <em>Low Priority Jobs</em> section of the user guide</a>.</p>
 <p>Suppose I wanted to burst beyond the Statistics condo to run on 20 nodes. I'll illustrate here with an interactive job though usually this would be for a batch job.</p>
 <pre><code>srun -A co_stat -p savio2 --qos=savio_lowprio  -N 20 -t 10:0 --pty bash
 env | grep SLURM</code></pre>
@@ -294,6 +293,7 @@ top</code></pre>
 <h1 id="alternatives-to-the-htc-partition-for-collections-of-serial-jobs">Alternatives to the HTC partition for collections of serial jobs</h1>
 <p>You may have many serial jobs to run. It may be more cost-effective to collect those jobs together and run them across multiple cores on one or more nodes.</p>
 <p>Here are some options:</p>
+<p>FIXME: update the HTC link to go to the new ht_helper page</p>
 <ul>
 <li><a href="http://research-it.berkeley.edu/services/high-performance-computing/tips-using-brc-savio-cluster">see the Savio tip on &quot;How to run High-Throughput Computing ...&quot;</a></li>
 <li>using <a href="https://github.com/berkeley-scf/tutorial-parallel-basics">single-node parallelism</a> and <a href="https://github.com/berkeley-scf/tutorial-parallel-distributed">multiple-node parallelism</a> in Python, R, and MATLAB
@@ -473,7 +473,7 @@ results</code></pre>
 <h1 id="upcoming-events">Upcoming events</h1>
 <ul>
 <li><a href="http://research-it.berkeley.edu/services/cloud-computing-support/cloud-working-group">Cloud Working Group</a>, every other Thursday (including Sep. 28), 4-5 in D-Lab</li>
-<li>Machine Learning Working Group, every other Friday (including Sep. 22), 12:30-2 in D-Lab</li>
+<li><a href="http://dlab.berkeley.edu/working-groups/machine-learning-working-group-0">Machine Learning Working Group</a>, every other Friday (including Sep. 22), 12:30-2 in D-Lab</li>
 </ul>
 </body>
 </html>

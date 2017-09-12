@@ -7,7 +7,7 @@
 
 We'll do this mostly as a demonstration. We encourage you to login to your account and try out the various examples yourself as we go through them.
 
-Much of this material is based on the extensive Savio documention we have prepared and continue to prepare, available at [http://research-it.berkeley.edu/services/high-performance-computing/user-guide](http://research-it.berkeley.edu/services/high-performance-computing/user-guide).
+Much of this material is based on the extensive Savio documention we have prepared and continue to prepare, available at [http://research-it.berkeley.edu/services/high-performance-computing](http://research-it.berkeley.edu/services/high-performance-computing/user).
 
 The materials for this tutorial are available using git at [https://github.com/ucberkeley/savio-training-intro-2016](https://github.com/ucberkeley/savio-training-intro-2017) or simply as a [zip file](https://github.com/ucberkeley/savio-training-intro-2017/archive/master.zip).
 
@@ -45,34 +45,32 @@ This training session will cover the following topics:
 
 # System capabilities and hardware
 
-- Savio is a >330-node, >7000-core Linux cluster rated at >300 peak teraFLOPS. 
-   - ~162 compute nodes provided by the institution for general access
-   - ~161 compute nodes contributed by researchers in the Condo program
-   - 50 nodes in the process of being added
-
+- Savio is a >380-node, >8000-core Linux cluster rated at >300 peak teraFLOPS. 
+   - about half of compute nodes provided by the institution for general access
+   - about half of compute nodes contributed by researchers in the Condo program
 
 
 # Getting access to the system - FCA and condo
 
 - All regular Berkeley faculty can request 300,000 service units (roughly core-hours) per year through the [Faculty Computing Allowance (FCA)](http://research-it.berkeley.edu/services/high-performance-computing/faculty-computing-allowance)
 - Researchers can also purchase nodes for their own priority access and gain access to the shared Savio infrastructure and to the ability to *burst* to additional nodes through the [condo cluster program](http://research-it.berkeley.edu/services/high-performance-computing/condo-cluster-program)
-- Instructors can request an [Instructional Computing Allowance (ICA)](http://research-it.berkeley.edu/services/high-performance-computing/instructional-computing-allowance). 
+- Instructors can request an [Instructional Computing Allowance (ICA)](http://research-it.berkeley.edu/programs/berkeley-research-computing/instructional-computing-allowance). 
 
 Faculty/principal investigators can allow researchers working with them to get user accounts with access to the FCA or condo resources available to the faculty member.
 
 # Savio computing nodes
 
-Let's take a look at the hardware specifications of the computing nodes on the cluster [(see the *Hardware Configuration* section of this document)](http://research-it.berkeley.edu/services/high-performance-computing/user-guide).
+Let's take a look at the hardware specifications of the computing nodes on the cluster [(see the *Hardware Configuration* section of this document)](http://research-it.berkeley.edu/services/high-performance-computing/user-guide/savio-user-guide).
 
-The nodes are divided into several pools, called partitions. These partitions have different restrictions and costs associated with them [(see the *Configuration Details* section of this document)](http://research-it.berkeley.edu/services/high-performance-computing/user-guide). Any job you submit must be submitted to a partition to which you have access.
+The nodes are divided into several pools, called partitions. These partitions have different restrictions and costs associated with them [(see the *Configuration Details* section of this document)](http://research-it.berkeley.edu/services/high-performance-computing/user-guide/savio-user-guide). Any job you submit must be submitted to a partition to which you have access.
 
 # Disk space options (home, scratch, project, condo storage)
 
-You have access to the following disk space, described [here in the *Storage and Backup* section](http://research-it.berkeley.edu/services/high-performance-computing/user-guide).
+You have access to the following disk space, described [here in the *Storage and Backup* section](http://research-it.berkeley.edu/services/high-performance-computing/user-guide/savio-user-guide).
 
 When reading/writing data to/from disk, unless the amount of data is small, please put the data in your scratch space at `/global/scratch/SAVIO_USERNAME`. The system is set up so that disk access for all users is optimized when users are doing input/output (I/O) off of scratch rather than off of their home directories. Doing I/O with files on your home directory can impact the ability of others to access their files on the filesystem. 
 
-Large amounts of disk space is available for purchase via a new [*condo storage* offering](http://research-it.berkeley.edu/services/high-performance-computing/brc-condo-storage-service-savio). The minimum purchase is about $7,000, which provides roughly 25 TB for five years.
+Large amounts of disk space is available for purchase the [*condo storage* offering](http://research-it.berkeley.edu/services/high-performance-computing/brc-condo-storage-service-savio). The minimum purchase is about $7,000, which provides roughly 25 TB for five years.
 
 
 # Login nodes, compute nodes, and DTN nodes 
@@ -215,7 +213,7 @@ bDrive provides **unlimited**, free, secured, and encrypted content storage of f
 
 You can move files to and from your laptop using the Google Drive app. 
 
-There are also some third-party tools for copying files to/from Google Drive, though I've found them to be a bit klunky. This is why we recommend using Box for workflows at this point. However, BRC is also working (short-term) on making Globus available for transfer to/from bDrive, though it's not available yet.
+There are also some third-party tools for copying files to/from Google Drive, though I've found them to be a bit klunky. This is why we recommend using Box for workflows at this point. However, BRC is also working on making Globus available for transfer to/from bDrive, though it's not available yet.
 
 # Software modules
 
@@ -389,7 +387,7 @@ matlab
 
 Condo users have access to the broader compute resource that is limited only by the size of partitions, under the *savio_lowprio* QoS (queue). However this QoS does not get a priority as high as the general QoSs, such as *savio_normal* and *savio_debug*, or all the condo QoSs, and it is subject to preemption when all the other QoSs become busy. 
 
-More details can be found [in the *Low Priority Jobs* section of the user guide](http://research-it.berkeley.edu/services/high-performance-computing/user-guide).
+More details can be found [in the *Low Priority Jobs* section of the user guide](http://research-it.berkeley.edu/services/high-performance-computing/user-guide/savio-user-guide).
 
 Suppose I wanted to burst beyond the Statistics condo to run on 20 nodes. I'll illustrate here with an interactive job though usually this would be for a batch job.
 
@@ -417,6 +415,8 @@ top
 You may have many serial jobs to run. It may be more cost-effective to collect those jobs together and run them across multiple cores on one or more nodes.
 
 Here are some options:
+
+FIXME: update the HTC link to go to the new ht_helper page
 
   - [see the Savio tip on "How to run High-Throughput Computing ..."](http://research-it.berkeley.edu/services/high-performance-computing/tips-using-brc-savio-cluster)
   - using [single-node parallelism](https://github.com/berkeley-scf/tutorial-parallel-basics) and [multiple-node parallelism](https://github.com/berkeley-scf/tutorial-parallel-distributed) in Python, R, and MATLAB
