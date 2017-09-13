@@ -317,10 +317,19 @@ Now let's submit and monitor the job:
 ```
 sbatch job.sh
 
-squeue -j JOB_ID
+squeue -j <JOB_ID>
 
-wwall -j JOB_ID
+wwall -j <JOB_ID>
 ```
+
+After a job has completed (or been terminated/cancelled), you can review the maximum memory used via the sacct command.
+
+```bash
+sacct -j <JOBID> --format=JobID,JobName,MaxRSS,Elapsed
+```
+
+MaxRSS will show the maximum amount of memory that the job used in kilobytes.
+
 
 Note that except for the *savio2_htc*  and *savio2_gpu* partitions, all jobs are given exclusive access to the entire node or nodes assigned to the job (and your account is charged for all of the cores on the node(s). 
 
