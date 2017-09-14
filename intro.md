@@ -427,9 +427,7 @@ You may have many serial jobs to run. It may be more cost-effective to collect t
 
 Here are some options:
 
-FIXME: update the HTC link to go to the new ht_helper page
-
-  - [see the Savio tip on "How to run High-Throughput Computing ..."](http://research-it.berkeley.edu/services/high-performance-computing/tips-using-brc-savio-cluster)
+  - using [Savio's HT Helper tool](http://research-it.berkeley.edu/services/high-performance-computing/user-guide/hthelper-script) to run many computational tasks (e.g., thousands of simulations, scanning tens of thousands of parameter values, etc.) as part of single Savio job submission
   - using [single-node parallelism](https://github.com/berkeley-scf/tutorial-parallel-basics) and [multiple-node parallelism](https://github.com/berkeley-scf/tutorial-parallel-distributed) in Python, R, and MATLAB
     - parallel R tools such as *foreach*, *parLapply*, and *mclapply*
     - parallel Python tools such as  *ipython parallel*, *pp*, and *multiprocessing*
