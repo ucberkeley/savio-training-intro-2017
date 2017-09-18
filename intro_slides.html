@@ -373,7 +373,7 @@ env | grep SLURM</code></pre>
 <div id="htc-jobs" class="slide section level1">
 <h1>HTC jobs</h1>
 <p>There is a partition called the HTC partition that allows you to request cores individually rather than an entire node at a time. The nodes in this partition are faster than the other nodes.</p>
-<pre><code>srun -A co_stat -p savio2_htc --nodes=2 -t 10:0 --pty bash
+<pre><code>srun -A co_stat -p savio2_htc --cpus-per-task=2 -t 10:0 --pty bash
 env | grep SLURM
 module load python/3.2.3 numpy
 python3 calc.py &gt;&amp; calc.out &amp;

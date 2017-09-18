@@ -414,7 +414,7 @@ env | grep SLURM
 There is a partition called the HTC partition that allows you to request cores individually rather than an entire node at a time. The nodes in this partition are faster than the other nodes.
 
 ```
-srun -A co_stat -p savio2_htc --nodes=2 -t 10:0 --pty bash
+srun -A co_stat -p savio2_htc --cpus-per-task=2 -t 10:0 --pty bash
 env | grep SLURM
 module load python/3.2.3 numpy
 python3 calc.py >& calc.out &
