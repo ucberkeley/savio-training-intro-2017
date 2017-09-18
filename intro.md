@@ -187,9 +187,9 @@ ls # on box
 !ls # on Savio
 mkdir workshops
 cd workshops # on box
-lcd savio-training-intro-2016 # on savio
-put foreach-doMPI.R # savio to box
-get AirlineDataAll.ffData  # box to savio; 1.4 Gb in ~ 1 minute
+lcd savio-training-intro-2017 # on savio
+put parallel-multi.R # savio to box
+get zotero.sqlite
 ```
 
 One additional command that can be quite useful is *mirror*, which lets you copy an entire directory to/from Box.
