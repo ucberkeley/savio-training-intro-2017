@@ -70,7 +70,7 @@ You have access to the following disk space, described [here in the *Storage and
 
 When reading/writing data to/from disk, unless the amount of data is small, please put the data in your scratch space at `/global/scratch/SAVIO_USERNAME`. The system is set up so that disk access for all users is optimized when users are doing input/output (I/O) off of scratch rather than off of their home directories. Doing I/O with files on your home directory can impact the ability of others to access their files on the filesystem. 
 
-Large amounts of disk space is available for purchase the [*condo storage* offering](http://research-it.berkeley.edu/services/high-performance-computing/brc-condo-storage-service-savio). The minimum purchase is about $7,000, which provides roughly 25 TB for five years.
+Large amounts of disk space is available for purchase from the [*condo storage* offering](http://research-it.berkeley.edu/services/high-performance-computing/brc-condo-storage-service-savio). The minimum purchase is about $7,000, which provides roughly 25 TB for five years.
 
 
 # Login nodes, compute nodes, and DTN nodes 
@@ -156,7 +156,11 @@ Globus transfers data between *endpoints*. Possible endpoints include: Savio, yo
 
 Savio's endpoint is named `ucb#brc`.
 
-If you are transferring to/from your laptop, you'll need 1) Globus Connect Personal set up, 2) your machine established as an endpoint and 3) Globus Connect Pesonal actively running on your machine. At that point you can proceed as below.
+If you are transferring to/from your laptop, you'll need
+
+1) Globus Connect Personal set up,
+2) your machine established as an endpoint, and
+3) Globus Connect Pesonal actively running on your machine. At that point you can proceed as below.
 
 To transfer files, you open Globus at [globus.org](https://globus.org) and authenticate to the endpoints you want to transfer between. This means that you only need to authenticate once, whereas you might need to authenticate multiple times with scp and sftp. You can then start a transfer and it will proceed in the background, including restarting if interrupted. 
 
@@ -282,7 +286,7 @@ brc|ac_scsguest|paciorek|savio_bigmem|1||||||||||||savio_debug,savio_normal|savi
 brc|ac_scsguest|paciorek|savio|1||||||||||||savio_debug,savio_normal|savio_normal||
 ```
 
-If you are part of a condo, you'll notice that you have *low-priority* access to certain partitions. For example I am part of the statistics cluster *co_stat*, which owns some Savio2 nodes and therefore I have normal access to those, but I can also burst beyond the condo and use other partitions at low-priority (see below).
+If you are part of a condo, you'll notice that you have *low-priority* access to certain partitions. For example I am part of the statistics condo *co_stat*, which owns some Savio2 nodes and therefore I have normal access to those, but I can also burst beyond the condo and use other partitions at low-priority (see below).
 
 In contrast, through my FCA, I have access to the savio, savio2, and big memory partitions.
 
@@ -376,7 +380,7 @@ Here are some of the variables that may be useful: SLURM_NTASKS, SLURM_CPUS_PER_
 Some common paradigms are:
 
  - MPI jobs that use *one* CPU per task for each of *n* tasks
- - openMP/threaded jobs that use *c* CPUs for *one* task
+ - openMP/threaded jobs that use *c* CPUs (on one node) for *one* task
  - hybrid MPI+threaded jobs that use *c* CPUs for each of *n* tasks
 
 There are lots more examples of job submission scripts for different kinds of parallelization (multi-node (MPI), multi-core (openMP), hybrid, etc.) [here](http://research-it.berkeley.edu/services/high-performance-computing/running-your-jobs#Job-submission-with-specific-resource-requirements).
@@ -406,6 +410,7 @@ Suppose I wanted to burst beyond the Statistics condo to run on 20 nodes. I'll i
 
 ```
 srun -A co_stat -p savio2 --qos=savio_lowprio --nodes=20 -t 10:0 --pty bash
+## now look at environment variables to see my job can access 20 nodes:
 env | grep SLURM
 ```
 
@@ -415,6 +420,7 @@ There is a partition called the HTC partition that allows you to request cores i
 
 ```
 srun -A co_stat -p savio2_htc --cpus-per-task=2 -t 10:0 --pty bash
+## we can look at environment variables to verify our two cores
 env | grep SLURM
 module load python/3.2.3 numpy
 python3 calc.py >& calc.out &
@@ -430,7 +436,7 @@ Here are some options:
   - using [Savio's HT Helper tool](http://research-it.berkeley.edu/services/high-performance-computing/user-guide/hthelper-script) to run many computational tasks (e.g., thousands of simulations, scanning tens of thousands of parameter values, etc.) as part of single Savio job submission
   - using [single-node parallelism](https://github.com/berkeley-scf/tutorial-parallel-basics) and [multiple-node parallelism](https://github.com/berkeley-scf/tutorial-parallel-distributed) in Python, R, and MATLAB
     - parallel R tools such as *foreach*, *parLapply*, and *mclapply*
-    - parallel Python tools such as  *ipython parallel*, *pp*, and *multiprocessing*
+    - parallel Python tools such as  *IPython parallel*, *pp*, and *multiprocessing*
     - parallel functionality in MATLAB through *parfor*
 
 # Monitoring jobs and the job queue
@@ -468,7 +474,7 @@ Let's see a brief demo of an IPython notebook:
 
  - Connect to https://jupyter.brc.berkeley.edu
  - Login as usual with a one-time password
- - Select how to run your notebook (on a test node or in the `savio` or `savio2` partitions)
+ - Select how to run your notebook (on a test node or in the `savio2_htc`, `savio` or `savio2` partitions)
  - Start up a notebook
 
 You can also run [parallel computations via an IPython notebook](http://research-it.berkeley.edu/services/high-performance-computing/using-jupyter-notebooks-and-jupyterhub-savio/parallelization).
@@ -534,7 +540,12 @@ lview.block = True
 
 import pandas
 dat = pandas.read_csv('bayArea.csv', header = None)
-dat.columns = ('Year','Month','DayofMonth','DayOfWeek','DepTime','CRSDepTime','ArrTime','CRSArrTime','UniqueCarrier','FlightNum','TailNum','ActualElapsedTime','CRSElapsedTime','AirTime','ArrDelay','DepDelay','Origin','Dest','Distance','TaxiIn','TaxiOut','Cancelled','CancellationCode','Diverted','CarrierDelay','WeatherDelay','NASDelay','SecurityDelay','LateAircraftDelay')
+dat.columns = ('Year','Month','DayofMonth','DayOfWeek','DepTime',
+'CRSDepTime','ArrTime','CRSArrTime','UniqueCarrier','FlightNum',
+'TailNum','ActualElapsedTime','CRSElapsedTime','AirTime','ArrDelay',
+'DepDelay','Origin','Dest','Distance','TaxiIn','TaxiOut','Cancelled',
+'CancellationCode','Diverted','CarrierDelay','WeatherDelay',
+'NASDelay','SecurityDelay','LateAircraftDelay')
 
 dview.execute('import statsmodels.api as sm')
 
